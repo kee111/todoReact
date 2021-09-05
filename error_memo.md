@@ -9,3 +9,5 @@ Attempted import error: './App' does not contain a default export (imported as '
 - App.jsにexport宣言を書くことにより解決  
     - 説明通りにやってのにエラーが出たので、コードを見比べたりしてコストを割いてしまった。  
     - しっかりと自分でも注意深くコードとエラー文を読んでいきたい。
+
+
