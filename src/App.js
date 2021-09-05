@@ -112,3 +112,6 @@ function App(props) {
         </div>
     );
 }
+
+// index.jsでimportしているのでexportする必要がある。
+export default App;
