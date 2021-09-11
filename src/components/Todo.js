@@ -12,12 +12,11 @@ export default function Todo(props) {
     // 編集ボタンを参照、フォーカス
     const editButtonRef = useRef(null);
 
-    // usePreviousの引数、isEditingは、画面切り替え用のstate
-    // つまりboolean型のwasEditingは、標準画面ならfalse、編集画面ならtrueになる
+    // 変更前のstateがwasEditingの中に入る。初回はundefined
     const wasEditing = usePrevious(isEditing);
 
     // フォーカスをする前の厳密な状態チェック
-    // useEffectで定義しているのでレンダリングが終わった後に実行される
+    // 画面が切り替わると実行される
     useEffect(() => {
         // 編集画面かつ編集画面なら、編集画面入力フォームをフォーカス
         if (!wasEditing && isEditing) {
@@ -30,13 +29,16 @@ export default function Todo(props) {
         //画面が切り替わったかチェックする
     }, [wasEditing, isEditing]);
 
-    // 引数に画面切り替え用のstate、boolean型のisEditingを受け取る
+    // 引数に画面切り替え用のstate、boolean型のisEditingを受け取り、変更前のstateを返す関数
     function usePrevious(value) {
         const ref = useRef();
         // useEffectで定義しているので、レンダリングが終わった後に実行される
+        // 1回目のレンダリング終了時falseがcurrentに代入される
         useEffect(() => {
             ref.current = value;
         });
+        // 先に実行される。初回はuseEffectが実行される前に実行されるのでundefinedが返る
+        // 2回目の実行時には1回目でcurrentに登録したfalseが入る
         return ref.current;
     }
 
