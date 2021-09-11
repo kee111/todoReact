@@ -38,7 +38,7 @@ export default function Todo(props) {
             ref.current = value;
         });
         // 先に実行される。初回はuseEffectが実行される前に実行されるのでundefinedが返る
-        // 2回目の実行時には1回目でcurrentに登録したfalseが入る
+        // 2回目の実行時には1回目でcurrentに登録したfalseが返る
         return ref.current;
     }
 
