@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 export default function Todo(props) {
     // 画面切り替え用state、falseで標準画面、trueで編集画面
     const [isEditing, setEditing] = useState(false);
-    // 編集画面入力フォームのレンダリング
+    // 編集画面入力フォームのレンダリング、編集したものを更新
     const [newName, setNewName] = useState("");
 
     // 編集画面入力フォームを参照、フォーカス
@@ -134,6 +134,7 @@ export default function Todo(props) {
         </div>
     );
 
+    // isEditingがtrueの時は編集画面を返し、falseの時は見る用の画面を返している。
     return (
         <li className="todo">{isEditing ? editingTemplate : viewTemplate}</li>
     );

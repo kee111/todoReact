@@ -1,5 +1,6 @@
 import React from "react";
 
+// フィルターボタンで表示を切り替えるためのコンポーネント
 function FilterButton(props) {
     return (
         <button
