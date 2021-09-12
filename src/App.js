@@ -7,12 +7,15 @@ import Todo from "./components/Todo";
 // レンダリングされる前のtasks.lengsを保存し、返す関数
 function usePrevious(value) {
     const ref = useRef();
+    // レンダリング後の値を保存
     useEffect(() => {
         ref.current = value;
     });
+    // レンダリング前の値をreturn
     return ref.current;
 }
 
+// trueが返ってきたものを表示するためのfilterオブジェクト
 const FILTER_MAP = {
     All: () => true,
     Active: (task) => !task.completed,
@@ -27,6 +30,7 @@ function App(props) {
     // index.jsから受け取ったtasksの配列の値を操作するstate
     const [tasks, setTasks] = useState(props.tasks);
 
+    // フィルターボタンが押された時の画面を切り替えるためのstate
     const [filter, setFilter] = useState("All");
 
     // 引数に受け取った文字列で新しいタスクを追加する関数。Formコンポーネントに渡される
@@ -80,6 +84,7 @@ function App(props) {
     }
 
     // Todoコンポーネントの配列を作成
+    // 現在のfilterの値でtaskと比較、trueが返ってきたものだけのオブジェクトを作り、一つ一つの要素をpropsとしてTodoコンポーネントに渡す。
     const taskList = tasks.filter(FILTER_MAP[filter]).map((task) => (
         <Todo
             id={task.id}
@@ -95,31 +100,44 @@ function App(props) {
         />
     ));
 
+    // filterボタンコンポーネントの配列を作成
     const filterList = FILTER_NAMES.map((name) => (
         <FilterButton
             key={name}
             name={name}
             isPressed={name === filter}
+            // フィルターをセットするためのstateを渡す
             setFilter={setFilter}
         />
     ));
 
+    // <h2>に入る文章
+    // タスクが1個以上あればtaskにsをつける
     const tasksNoun = taskList.length !== 1 ? "tasks" : "task";
     const headingText = `${taskList.length} ${tasksNoun} remaining`;
 
+    // <h2>を参照
     const listHeadingRef = useRef(null);
+    // レンダリング前のタスクの数を取ってくる
     const prevTaskLength = usePrevious(tasks.length);
 
+    // タスクが削除された後に<h2>にあたるフォーカスを操作する
     useEffect(() => {
+        // レンダリング前のタスク数より、タスク数が減っていればタスクが削除されたとみなせる。
+        // タスクが削除されていれば<h2>にフォーカスを当てる
         if (tasks.length - prevTaskLength === -1) {
             listHeadingRef.current.focus();
         }
+        // レンダリング前後のタスク数に変化があった場合に実行
     }, [tasks.length, prevTaskLength]);
 
+    // index.jsに返すjsx
     return (
         <div className="todoapp stack-large">
+            {/* formコンポーネントにaddTaskメソッドを渡す */}
             <Form addTask={addTask} />
             <div className="filters btn-group stack-exception">
+                {/* フィルターボタン */}
                 {filterList}
             </div>
             <h2 id="list-heading" tabIndex="-1" ref={listHeadingRef}>
@@ -130,6 +148,7 @@ function App(props) {
                 className="todo-list stack-large stack-exception"
                 aria-labelledby="list-heading"
             >
+                {/* タスクリスト */}
                 {taskList}
             </ul>
         </div>

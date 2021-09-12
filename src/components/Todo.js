@@ -106,6 +106,7 @@ export default function Todo(props) {
                     id={props.id}
                     type="checkbox"
                     defaultChecked={props.completed}
+                    // チェックボックスが押されたタスクのbooleanを反転
                     onChange={() => props.toggleTaskCompleted(props.id)}
                 />
                 <label className="todo-label" htmlFor={props.id}>
@@ -117,6 +118,7 @@ export default function Todo(props) {
                 <button
                     type="button"
                     className="btn"
+                    // ボタンが押されたら編集画面に切り替え
                     onClick={() => setEditing(true)}
                     ref={editButtonRef}
                 >
@@ -126,6 +128,7 @@ export default function Todo(props) {
                 <button
                     type="button"
                     className="btn btn__danger"
+                    // ボタンが押されたらタスク削除
                     onClick={() => props.deleteTask(props.id)}
                 >
                     Delete <span className="visually-hidden">{props.name}</span>

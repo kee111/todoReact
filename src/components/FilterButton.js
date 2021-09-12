@@ -7,6 +7,7 @@ function FilterButton(props) {
             type="button"
             className="btn toggle-btn"
             aria-pressed={props.isPressed}
+            // ボタンが押されたフィルターの名前に変更
             onClick={() => props.setFilter(props.name)}
         >
             <span className="visually-hidden">Show </span>
